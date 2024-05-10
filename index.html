@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../fonts/fontawesome-free-6.4.2-web/css/all.css">
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            scroll-behavior: smooth;
+
+        }
+
+        :root{
+            --primary: #ec3ce4;
+            --secondary: #78FCDE;
+            --light: #e8f7f2;
+            --dark: #3D123F;
+        }
+
+        body {
+            background-color: var(--dark);
+        }
+
+        h1{
+            margin-bottom: 2vh;
+        }
+
+        .container {
+            margin: 0 auto;
+            width: 100vw;
+            max-width: 1300px;
+            background-color: var(--light);
+        }
+
+        nav {
+            width: 100%;
+            height: 5vh;
+            background-color: var(--dark);
+            display: flex;
+            align-items: center;
+            justify-content: space-evenly;
+        }
+
+        .menu {
+            width: 60vw;
+            display: flex;
+            justify-content: space-around;
+            margin: 0 auto;
+            gap: 15%;
+        }
+
+        .menu a {
+            color: var(--secondary);
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .menu a:hover {
+            color: var(--primary);
+        }
+
+        .bar {
+            width: 25px;
+            height: 3px;
+            background-color: var(--secondary);
+            margin: 5px;
+            display: block;
+            border-radius: 20px;
+        }
+
+        .ham:hover .bar {
+            background-color: var(--primary);
+            transition: 0.2s;
+        }
+
+        .ham:hover .bar:nth-child(2) {
+            visibility: hidden;
+            transition: 0s;
+        }
+
+        .ham:hover .bar:nth-child(1) {
+            transform: translateY(8px) rotate(45deg);
+        }
+
+        .ham:hover .bar:nth-child(3) {
+            transform: translateY(-8px) rotate(-45deg);
+        }
+
+        .ham.aktiv .bar:nth-child(2) {
+            visibility: hidden;
+        }
+
+        .ham.aktiv .bar:nth-child(1) {
+            transform: translateY(8px) rotate(45deg);
+        }
+
+        .ham.aktiv .bar:nth-child(3) {
+            transform: translateY(-8px) rotate(-45deg);
+        }
+
+        @media screen and (width>=650px) {
+            .ham {
+                visibility: hidden;
+            }
+        }
+
+        @media screen and (width<=650px) {
+            nav {
+                overflow: hidden;
+            }
+
+            .menu {
+                width: 100%;
+                flex-direction: column;
+                position: absolute;
+                top: 5vh;
+                left: 0;
+                background-color: var(--dark);
+                height: 0;
+                overflow: hidden;
+                transition: .3s;
+                gap: 0;
+            }
+
+            .menu.passiv {
+                height: 5rem;
+                transition: .3s;
+            }
+
+            .menu a {
+                display: block;
+                width: 100%;
+                color: var(--secondary);
+                text-align: center;
+            }
+
+            .menu a:hover {
+                background-color: var(--light);
+                color: var(--primary);
+            }
+        }
+
+        main {
+            width: 100%;
+            height: 85vh;
+            background-color: var(--light);
+            overflow: auto;
+        }
+
+        section {
+            height: 100vh;
+            padding: 2rem;
+            margin:0 auto;
+        }
+
+        section img {
+            width: 40%;
+            float: right;
+            margin-left: 30px;
+            margin-top: 7px;
+            margin-bottom: 10px;
+        }
+
+        section p {
+            text-align: justify;
+            letter-spacing: 1;
+            line-height: 140%;
+            hyphens: auto;
+        }
+
+        .formular{
+        &  fieldset{
+            width: 85vw;
+            height: 65vh;
+            margin: 0 auto;
+            padding: 2rem;
+            background-color: var(--dark);
+            color: var(--light);
+            border: none;
+            box-sizing: border-box;
+        }
+
+        & div{
+            padding: 0.8rem;
+        }
+
+        & a{
+            color: var(--secondary);
+        }
+
+        & input[type="text"],
+        input[type="email"],
+        textarea{
+            width: 100%;
+            padding: 0.7em;
+            color: #333;
+            background-color: white;
+            border-radius: 5px;
+            border: none;
+            border-bottom: 2px solid var(--dark);
+            outline: none;
+        }
+
+        & input[type="text"]:hover,
+        input[type="email"]:hover,
+        textarea:hover{
+            border-bottom: 2px solid var(--primary);
+        }
+
+        & input[type="text"]:focus,
+        input[type="email"]:focus,
+        textarea:focus{
+            border-bottom: 2px solid var(--secondary);
+        }
+
+        & textarea{
+            overflow: auto;
+        }
+
+        ::placeholder{
+            color: var(--dark);
+        }
+
+        & input[type="submit"],
+        input[type="reset"]{
+            border: none;
+            border-radius: 5px;
+            padding: 0.8rem;
+            width: 150px;
+            background-color: var(--secondary);
+            margin-right: 20px;
+        }
+
+        & input[type="submit"]:hover,
+        input[type="reset"]:hover{
+            background-color: var(--primary);
+            text-transform: uppercase;
+        }
+    }
+
+    @media screen and (width>900px) {
+        .formular fieldset{
+            width: 50vw;
+        }
+
+        h1{
+            text-align: center;
+        }
+    }
+
+    .row > .column {
+        padding: 0;
+    }
+
+    .row:after {
+        content: "";
+        display: table;
+        clear: both;
+    }
+
+    /* Create four equal columns that floats next to eachother */
+    .column {
+        float: left;
+        width: 25%;
+        margin-bottom: 2vh;
+    }
+
+    .column img{
+        width: 95%;
+    }
+
+    /* The Modal (background) */
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        padding-top: 100px;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: black;
+    }
+
+    /* Modal Content */
+    .modal-content {
+        position: relative;
+        background-color: #fefefe;
+        margin: auto;
+        padding: 0;
+        width: 90%;
+        max-width: 1200px;
+    }
+
+    /* The Close Button */
+    .close {
+        color: var(--primary);
+        position: absolute;
+        top: 10px;
+        right: 25px;
+        font-size: 35px;
+        font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+        color: var(--secondary);
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    /* Hide the slides by default */
+    .mySlides {
+        display: none;
+    }
+
+    /* Next & previous buttons */
+    .prev,
+    .next {
+        cursor: pointer;
+        position: absolute;
+        top: 50%;
+        width: auto;
+        padding: 16px;
+        margin-top: -50px;
+        color: var(--primary);
+        font-weight: bold;
+        font-size: 20px;
+        transition: 0.6s ease;
+        border-radius: 0 3px 3px 0;
+        user-select: none;
+        -webkit-user-select: none;
+    }
+
+    /* Position the "next button" to the right */
+    .next {
+        right: 0;
+        border-radius: 3px 0 0 3px;
+    }
+
+    /* On hover, add a black background color with a little bit see-through */
+    .prev:hover,
+    .next:hover {
+        background-color: rgba(0, 0, 0, 0.8);
+    }
+
+    /* Number text (1/3 etc) */
+    .numbertext {
+        color: var(--light);
+        font-size: 12px;
+        padding: 8px 12px;
+        position: absolute;
+        top: 0;
+    }
+
+    /* Caption text */
+    .caption-container {
+        text-align: center;
+        background-color: black;
+        padding: 2px 16px;
+        color: var(--light);
+    }
+
+    img.demo {
+        opacity: 0.6;
+    }
+
+    .active,
+    .demo:hover {
+        opacity: 1;
+    }
+
+    img.hover-shadow {
+        transition: 0.3s;
+    }
+
+    .hover-shadow:hover {
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    }
+
+        footer {
+            width: 100%;
+            height: 10vh;
+            background-color: var(--dark);
+        }
+</style>
+</head>
+<body>
+    <div class="container">
+        <nav>
+            <div class="menu">
+                <a href="#eins">Home</a>
+                <a href="#zwei">About</a>
+                <a href="#drei">Kontakt</a>
+            </div>
+            <div class="ham">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+            <script>
+                var eins = document.querySelector(".ham");
+                var zwei = document.querySelector(".menu");
+
+                eins.addEventListener("click", () => {
+                    eins.classList.toggle("aktiv");
+                    zwei.classList.toggle("passiv");
+                });
+            </script>
+        </nav>
+        <main>
+            <section id="eins">
+                <!-- Images used to open the lightbox -->
+                <div class="row">
+                    <div class="column">
+                    <img src="https://i.pinimg.com/736x/77/88/57/778857278390db7cf21b1f31768f821a.jpg" onclick="openModal();currentSlide(1)" class="hover-shadow">
+                    </div>
+                    <div class="column">
+                    <img src="https://64.media.tumblr.com/71332c869ea27306214977e404330aae/d4cd86742b5cee35-88/s1280x1920/78f3b70e15351a2138a8f39068032eefb7cb11b8.jpg" onclick="openModal();currentSlide(2)" class="hover-shadow">
+                    </div>
+                    <div class="column">
+                    <img src="https://pbs.twimg.com/media/EvLchKtXMAA1EfG.jpg" onclick="openModal();currentSlide(3)" class="hover-shadow">
+                    </div>
+                    <div class="column">
+                    <img src="https://i.pinimg.com/736x/76/c7/39/76c739888ba7bf8dfe9244435b6719da.jpg" onclick="openModal();currentSlide(4)" class="hover-shadow">
+                    </div>
+                </div>
+  
+                <!-- The Modal/Lightbox -->
+                <div id="myModal" class="modal">
+                    <span class="close cursor" onclick="closeModal()">&times;</span>
+                <div class="modal-content">
+                    <div class="mySlides">
+                        <div class="numbertext">1 / 4</div>
+                        <img src="https://i.pinimg.com/736x/77/88/57/778857278390db7cf21b1f31768f821a.jpg" style="width: 60%;">
+                    </div>
+  
+                    <div class="mySlides">
+                        <div class="numbertext">2 / 4</div>
+                        <img src="https://64.media.tumblr.com/71332c869ea27306214977e404330aae/d4cd86742b5cee35-88/s1280x1920/78f3b70e15351a2138a8f39068032eefb7cb11b8.jpg" style="width: 60%;" >
+                    </div>
+  
+                    <div class="mySlides">
+                        <div class="numbertext">3 / 4</div>
+                        <img src="https://pbs.twimg.com/media/EvLchKtXMAA1EfG.jpg" style="width: 60%;">
+                    </div>
+  
+                    <div class="mySlides">
+                        <div class="numbertext">4 / 4</div>
+                        <img src="https://i.pinimg.com/736x/76/c7/39/76c739888ba7bf8dfe9244435b6719da.jpg" style="width: 60%;">
+                    </div>
+
+                    <!-- Next/previous controls -->
+                    <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+                    <a class="next" onclick="plusSlides(1)">&#10095;</a>
+  
+                    <!-- Caption text -->
+                    <div class="caption-container">
+                    <p id="caption"></p>
+                    </div>
+  
+                    <!-- Thumbnail image controls -->
+                    <div class="column">
+                    <img class="demo" src="https://i.pinimg.com/736x/77/88/57/778857278390db7cf21b1f31768f821a.jpg" onclick="currentSlide(1)" style="width:50%;">
+                    </div>
+  
+                    <div class="column">
+                    <img class="demo" src="https://64.media.tumblr.com/71332c869ea27306214977e404330aae/d4cd86742b5cee35-88/s1280x1920/78f3b70e15351a2138a8f39068032eefb7cb11b8.jpg" onclick="currentSlide(2)" style="width:50%;">
+                    </div>
+  
+                    <div class="column">
+                    <img class="demo" src="https://pbs.twimg.com/media/EvLchKtXMAA1EfG.jpg" onclick="currentSlide(3)" style="width:50%;">
+                    </div>
+  
+                    <div class="column">
+                    <img class="demo" src="https://i.pinimg.com/736x/76/c7/39/76c739888ba7bf8dfe9244435b6719da.jpg" onclick="currentSlide(4)" style="width:50%;">
+                    </div>
+                </div>
+                </div>
+                <div>
+                    <h1>Willkommen</h1>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam consectetur et error quas ea doloremque animi eius adipisci, odio magnam eos nisi dicta voluptatem, reprehenderit voluptates illo harum placeat minima laboriosam cum ad accusamus officiis. Error, laboriosam dolorum consequuntur culpa sed est. Quis aperiam rem eligendi sint ducimus neque assumenda quo cupiditate quisquam sed eos, porro voluptatibus velit dolorum unde, earum facere nobis labore impedit odio blanditiis eum ea. Temporibus fugiat veritatis natus ex quae nam exercitationem porro rem architecto suscipit sed eius blanditiis minus deserunt doloremque nemo ea explicabo, consectetur praesentium voluptatem, rerum ipsum harum? Iusto cupiditate temporibus numquam consequatur inventore. Error rem expedita corporis nemo labore ab quasi quae! Aut ipsa odit, ut unde ipsum soluta error alias suscipit. Quasi ad error quidem molestias architecto in amet, deleniti voluptas laboriosam officia nulla numquam iure nobis harum. Eaque, tenetur quis voluptate quisquam sapiente, tempora nisi commodi similique, inventore nihil minus. Voluptatibus dolore, a numquam tenetur quibusdam dicta iste neque eligendi eius. Debitis neque fuga ut velit error incidunt dignissimos sequi hic quaerat qui atque provident explicabo minus quia, facilis laboriosam dolorum doloremque odio accusamus deserunt, architecto assumenda. Porro sequi tempora quam neque nobis qui sed, quo, modi molestias sapiente fugit, nihil a doloremque? Accusamus pariatur ab eos suscipit fugit consequatur. Laudantium magnam ducimus, odio ipsa necessitatibus dolore adipisci illum iure corporis inventore praesentium. Ad sapiente, asperiores quis reiciendis inventore qui libero accusamus eum minus earum nisi impedit nobis culpa aperiam minima ut odit consequatur non quibusdam tenetur, quasi error. Aliquid maxime vitae consequatur, doloribus beatae sapiente recusandae id voluptas nobis maiores quisquam dicta nemo, enim, esse minus laborum rerum iusto aliquam facilis placeat officia animi asperiores culpa! Facilis error doloremque eveniet quidem itaque qui, velit quibusdam obcaecati fuga ex nisi quae optio excepturi, recusandae est at! Molestiae, aliquid tempora.
+                    </p>
+                </div>
+        <script>
+        // Open the Modal
+        function openModal() {
+        document.getElementById("myModal").style.display = "block";
+        }
+
+        // Close the Modal
+        function closeModal() {
+        document.getElementById("myModal").style.display = "none";
+        }
+
+        var slideIndex = 1;
+        showSlides(slideIndex);
+
+        // Next/previous controls
+        function plusSlides(n) {
+        showSlides(slideIndex += n);
+        }
+
+        // Thumbnail image controls
+        function currentSlide(n) {
+        showSlides(slideIndex = n);
+        }
+
+        function showSlides(n) {
+        var i;
+        var slides = document.getElementsByClassName("mySlides");
+        var dots = document.getElementsByClassName("demo");
+        var captionText = document.getElementById("caption");
+            if (n > slides.length) {slideIndex = 1}
+            if (n < 1) {slideIndex = slides.length}
+            for (i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+            }
+            for (i = 0; i < dots.length; i++) {
+                dots[i].className = dots[i].className.replace(" active", "");
+            }
+            slides[slideIndex-1].style.display = "block";
+            dots[slideIndex-1].className += " active";
+            captionText.innerHTML = dots[slideIndex-1].alt;
+            }
+        </script>
+            </section>
+            <section id="zwei">
+                <div>
+                    <h1>Über mich</h1>
+                    <img src="https://i1.sndcdn.com/artworks-40N1qIt0VzhmnzhK-TZgzDA-t500x500.jpg" alt="">
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam consectetur et error quas ea doloremque animi eius adipisci, odio magnam eos nisi dicta voluptatem, reprehenderit voluptates illo harum placeat minima laboriosam cum ad accusamus officiis. Error, laboriosam dolorum consequuntur culpa sed est. Quis aperiam rem eligendi sint ducimus neque assumenda quo cupiditate quisquam sed eos, porro voluptatibus velit dolorum unde, earum facere nobis labore impedit odio blanditiis eum ea. Temporibus fugiat veritatis natus ex quae nam exercitationem porro rem architecto suscipit sed eius blanditiis minus deserunt doloremque nemo ea explicabo, consectetur praesentium voluptatem, rerum ipsum harum? Iusto cupiditate temporibus numquam consequatur inventore. Error rem expedita corporis nemo labore ab quasi quae! Aut ipsa odit, ut unde ipsum soluta error alias suscipit. Quasi ad error quidem molestias architecto in amet, deleniti voluptas laboriosam officia nulla numquam iure nobis harum. Eaque, tenetur quis voluptate quisquam sapiente, tempora nisi commodi similique, inventore nihil minus. Voluptatibus dolore, a numquam tenetur quibusdam dicta iste neque eligendi eius. Debitis neque fuga ut velit error incidunt dignissimos sequi hic quaerat qui atque provident explicabo minus quia, facilis laboriosam dolorum doloremque odio accusamus deserunt, architecto assumenda. Porro sequi tempora quam neque nobis qui sed, quo, modi molestias sapiente fugit, nihil a doloremque? Accusamus pariatur ab eos suscipit fugit consequatur. Laudantium magnam ducimus, odio ipsa necessitatibus dolore adipisci illum iure corporis inventore praesentium. Ad sapiente, asperiores quis reiciendis inventore qui libero accusamus eum minus earum nisi impedit nobis culpa aperiam minima ut odit consequatur non quibusdam tenetur, quasi error. Aliquid maxime vitae consequatur, doloribus beatae sapiente recusandae id voluptas nobis maiores quisquam dicta nemo, enim, esse minus laborum rerum iusto aliquam facilis placeat officia animi asperiores culpa! Facilis error doloremque eveniet quidem itaque qui, velit quibusdam obcaecati fuga ex nisi quae optio excepturi, recusandae est at! Molestiae, aliquid tempora.
+                    </p>
+                </div>
+            </section>
+            <section id="drei">
+                <h1>Kontakt</h1>
+                <div class="formular">
+                <form id="myForm" method="post">
+                    <fieldset>
+                        <div>
+                            <input type="text" name="name" id="name" placeholder="Ihr Name">
+                        </div>
+                        <div>
+                            <input type="email" name="mail" id="mail" placeholder="E-Mail-Adresse" required>
+                            <label for="mail"></label>
+                        </div>
+                        <div>
+                            <textarea name="nachricht" id="nachricht" placeholder="Hier Nachricht eingeben..." rows="12"
+                                required></textarea>
+                            <label for="nachricht"></label>
+                        </div>
+                        <div class="py-1">
+                            <input type="checkbox" name="reply" id="reply" value="reply" class="nobreak" required>
+                            <label for="reply" class="nobreak">Mit der Nutzung des Formulars erkläre ich mich mit der <a href="#">Datenschutzerklärung</a> einverstanden.</label>
+                        </div>
+                        <div>
+                            <input name="absenden" type="submit" value="Absenden" class="nobreak">
+                            <input name="Reset" type="reset" value="Zurücksetzen" class="nobreak">
+                        </div>
+                    </fieldset>
+                </form>
+                </div>
+            </section>
+        </main>
+        <footer></footer>
+    </div>
+
+</body>
+
+</html>
